@@ -2,7 +2,9 @@ package com.swdesign.eventchecker.DTO;
 
 import com.google.gson.annotations.SerializedName;
 
-public class EventInfo {
+import java.io.Serializable;
+
+public class EventInfo implements Serializable {
     @SerializedName("company")
     private String company;
     @SerializedName("date")

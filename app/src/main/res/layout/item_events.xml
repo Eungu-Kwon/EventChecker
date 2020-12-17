@@ -53,8 +53,8 @@
     </LinearLayout>
 
     <ImageView
-        android:id="@+id/l_item_image"
-        android:layout_width="84dp"
+        android:id="@+id/l_item_banner"
+        android:layout_width="384dp"
         android:layout_height="match_parent"
         android:layout_gravity="center_vertical"
         android:layout_marginHorizontal="5dp"

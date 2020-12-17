@@ -32,12 +32,7 @@ public class CompanyListAdapter extends RecyclerView.Adapter<CompanyListAdapter.
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Log.d("mTag", text_name.getText().toString());
                     callback.changeCompany(aData.get(getAdapterPosition()));
-//                    Intent modiIntent = new Intent(v.getContext(), AlarmSettingActivity.class);
-//                    modiIntent.putExtra("isNew", false);
-//                    modiIntent.putExtra("modi_idx", getAdapterPosition());
-//                    v.getContext().startActivity(modiIntent);
                 }
             });
         }

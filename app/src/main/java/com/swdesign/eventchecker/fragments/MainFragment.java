@@ -1,7 +1,6 @@
 package com.swdesign.eventchecker.fragments;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,7 +36,7 @@ public class MainFragment extends Fragment implements DBCallback, AdapterCallbac
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.frame_home, container, false);
-        r = new EventRepository("http://155.230.52.58:26287/", this);
+        r = new EventRepository("http://155.230.52.58:26287/", this, getContext());
         cur_company = null;
         init_list();
         return v;
@@ -73,7 +72,6 @@ public class MainFragment extends Fragment implements DBCallback, AdapterCallbac
     @Override
     public void companyDone() {
         cur_company = companyList.get(0);
-        Log.d("mTag", cur_company.getName());
         setList();
     }
 

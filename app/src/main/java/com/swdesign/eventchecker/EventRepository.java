@@ -1,10 +1,15 @@
 package com.swdesign.eventchecker;
 
+import android.content.Context;
+import android.os.Environment;
 import android.util.Log;
 
 import com.swdesign.eventchecker.DTO.CompanyInfo;
 import com.swdesign.eventchecker.DTO.EventInfo;
+import com.swdesign.eventchecker.StaticMethod.ImageFileManager;
+import com.swdesign.eventchecker.StaticMethod.ImageOpener;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,13 +23,16 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class EventRepository {
     DBApi api;
     DBCallback dbCallback;
-    public EventRepository(String url, DBCallback listener) {
+    Context c;
+    public EventRepository(String url, DBCallback listener, Context c) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(url)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         dbCallback = listener;
         api = retrofit.create(DBApi.class);
+
+        this.c = c;
     }
 
     public void setEventList(String company, ArrayList<EventInfo> list){
@@ -35,6 +43,25 @@ public class EventRepository {
                 if(response.isSuccessful()){
                     List<EventInfo> event = response.body();
                     for(EventInfo i : event){
+                        File file = new File(c.getExternalFilesDir(Environment.DIRECTORY_PICTURES), i.getImageurl().substring(i.getImageurl().lastIndexOf("/")+1) + ".jpg_icon");
+                        if(!file.exists()){
+                            Thread thread = new Thread(){
+                                @Override
+                                public void run() {
+                                    File image = ImageOpener.openImage(c, i.getImageurl());
+
+                                    if(image != null){
+                                        ImageFileManager.saveImageIcon(c, image);
+                                    }
+                                }
+                            };
+                            thread.start();
+                            try {
+                                thread.join();
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        }
                         list.add(i);
                     }
                     dbCallback.dbDone();
