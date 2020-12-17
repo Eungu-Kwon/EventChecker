@@ -13,12 +13,14 @@ import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.swdesign.eventchecker.R;
+import com.swdesign.eventchecker.fragments.FavoriteFragment;
 import com.swdesign.eventchecker.fragments.MainFragment;
 
 public class MainActivity extends AppCompatActivity {
     final long FINISH_INTERVAL_TIME = 2000;
     long backPressedTime = 0;
     MainFragment mainFragment;
+    FavoriteFragment favoriteFragment;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
         final FragmentManager fm = getSupportFragmentManager();
         final FragmentTransaction fragmentTransaction = fm.beginTransaction();
         mainFragment = new MainFragment();
+        favoriteFragment = new FavoriteFragment();
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -38,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
                         replaceFragment(mainFragment);
                         break;
                     case R.id.bottom_list:
-                        //replaceFragment(fragment);
+                        replaceFragment(favoriteFragment);
                         break;
                     case R.id.bottom_setting:
                         fm.popBackStack();

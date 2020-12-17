@@ -101,7 +101,7 @@ public class ImageFileManager {
         //String timeStamp = url;
         String imageFileName = url;
         File storageDir = c.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-        File image = new File(storageDir + "/" + imageFileName + ".jpg");
+        File image = new File(storageDir + "/" + imageFileName);
         Log.d("mTag", "created" + image.getAbsolutePath());
         return image;
     }

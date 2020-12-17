@@ -24,7 +24,7 @@ public interface DBApi {
     Call<List<EventInfo>> getEvent(@Query("company") String company);
 
     @GET("/event")
-    Call<List<EventInfo>> getEvent();
+    Call<List<EventInfo>> getEventByID(@Query("_id") String id);
 
     @GET("/company")
     Call<List<CompanyInfo>> getCompany();

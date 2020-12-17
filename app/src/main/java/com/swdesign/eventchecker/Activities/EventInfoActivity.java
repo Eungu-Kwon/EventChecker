@@ -59,15 +59,29 @@ public class EventInfoActivity extends AppCompatActivity implements DBCallback {
         content_image = findViewById(R.id.event_content_image);
 
         title_view.setText(event.getTitle());
-        content_view.setText(event.getContent());
-        date_view.setText(event.getDate());
-        File file = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), event.getImageurl().substring(event.getImageurl().lastIndexOf("/")+1) + ".jpg");
-        if(file.exists()){
-            content_image.setImageBitmap(BitmapFactory.decodeFile(file.getAbsolutePath()));
-            content_image.setVisibility(View.VISIBLE);
+        if(!event.getContent().startsWith("http")) {
+            content_view.setText(event.getContent());
+            content_view.setVisibility(View.VISIBLE);
         }
         else{
-            content_image.setVisibility(View.GONE);
+            File file = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), event.getContent().substring(event.getContent().lastIndexOf("/")+1));
+            if(file.exists()){
+                content_image.setImageBitmap(BitmapFactory.decodeFile(file.getAbsolutePath()));
+                content_image.setVisibility(View.VISIBLE);
+            }
+            else{
+                content_image.setVisibility(View.GONE);
+            }
+            content_view.setVisibility(View.GONE);
+        }
+        date_view.setText(event.getDate());
+        File file = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), event.getImageurl().substring(event.getImageurl().lastIndexOf("/")+1));
+        if(file.exists()){
+            banner.setImageBitmap(BitmapFactory.decodeFile(file.getAbsolutePath()));
+            banner.setVisibility(View.VISIBLE);
+        }
+        else{
+            banner.setVisibility(View.GONE);
         }
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

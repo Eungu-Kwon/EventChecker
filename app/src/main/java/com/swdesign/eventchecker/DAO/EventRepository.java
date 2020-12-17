@@ -1,9 +1,9 @@
 package com.swdesign.eventchecker.DAO;
 
 import android.content.Context;
-import android.mtp.MtpConstants;
 import android.os.Environment;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.google.gson.GsonBuilder;
 import com.swdesign.eventchecker.DTO.CompanyInfo;
@@ -26,7 +26,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 // DAO
 public class EventRepository {
-    public static final int EVENT_DONE = 384;
+    public static final int EVENT_LIST_DONE = 384;
+    public static final int EVENT_DONE = 538;
     public static final int COMPANY_DONE = 246;
     public static final int USER_DONE = 546;
     public static final int FAVORITE_DONE = 3;
@@ -52,13 +53,16 @@ public class EventRepository {
                 if(response.isSuccessful()){
                     List<EventInfo> event = response.body();
                     for(EventInfo i : event){
-                        File file = new File(c.getExternalFilesDir(Environment.DIRECTORY_PICTURES), i.getImageurl().substring(i.getImageurl().lastIndexOf("/")+1) + ".jpg_icon");
-                        if(!file.exists()){
+                        File file1 = new File(c.getExternalFilesDir(Environment.DIRECTORY_PICTURES), i.getImageurl().substring(i.getImageurl().lastIndexOf("/")+1) + "_icon");
+                        File file2 = new File(c.getExternalFilesDir(Environment.DIRECTORY_PICTURES), i.getContent().substring(i.getContent().lastIndexOf("/")+1));
+                        if((!file1.exists() && !i.getImageurl().equals("")) || (i.getContent().startsWith("http") && !file2.exists())){
                             Thread thread = new Thread(){
                                 @Override
                                 public void run() {
-                                    File image = ImageOpener.openImage(c, i.getImageurl());
-
+                                    File contentimage;
+                                    File image = null;
+                                    if(!i.getImageurl().equals("")) image = ImageOpener.openImage(c, i.getImageurl());
+                                    if(i.getContent().startsWith("http")) contentimage = ImageOpener.openImage(c, i.getContent());
                                     if(image != null){
                                         ImageFileManager.saveImageIcon(c, image);
                                     }
@@ -73,7 +77,25 @@ public class EventRepository {
                         }
                         list.add(i);
                     }
-                    if(dbCallback != null) dbCallback.dbDone(EVENT_DONE);
+                    if(dbCallback != null) dbCallback.dbDone(EVENT_LIST_DONE);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<EventInfo>> call, Throwable t) {
+                Log.d("mTag", t.toString());
+            }
+        });
+    }
+
+    public void getEvent(String id, ArrayList<EventInfo> list){
+        api.getEventByID(id).enqueue(new Callback<List<EventInfo>>() {
+            @Override
+            public void onResponse(Call<List<EventInfo>> call, Response<List<EventInfo>> response) {
+                if(response.isSuccessful()){
+                    for(EventInfo i : response.body())
+                        list.add(i);
+                    dbCallback.dbDone(EVENT_LIST_DONE);
                 }
             }
 

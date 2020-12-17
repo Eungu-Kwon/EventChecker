@@ -76,7 +76,7 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.View
         viewHolder.text_content.setText(content);
         viewHolder.text_time.setText(time);
 
-        File file = new File(context.getExternalFilesDir(Environment.DIRECTORY_PICTURES), aData.get(i).getImageurl().substring(aData.get(i).getImageurl().lastIndexOf("/")+1) + ".jpg_icon");
+        File file = new File(context.getExternalFilesDir(Environment.DIRECTORY_PICTURES), aData.get(i).getImageurl().substring(aData.get(i).getImageurl().lastIndexOf("/")+1) + "_icon");
         if(file.exists()){
             viewHolder.banner.setImageBitmap(BitmapFactory.decodeFile(file.getAbsolutePath()));
             viewHolder.banner.setVisibility(View.VISIBLE);
