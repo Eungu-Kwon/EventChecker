@@ -65,14 +65,13 @@ public class MainFragment extends Fragment implements DBCallback, AdapterCallbac
     }
 
     @Override
-    public void dbDone() {
-        listAdapter.notifyDataSetChanged();
-    }
-
-    @Override
-    public void companyDone() {
-        cur_company = companyList.get(0);
-        setList();
+    public void dbDone(int code) {
+        if(code == EventRepository.EVENT_DONE)
+            listAdapter.notifyDataSetChanged();
+        else if(code == EventRepository.COMPANY_DONE){
+            cur_company = companyList.get(0);
+            setList();
+        }
     }
 
     @Override

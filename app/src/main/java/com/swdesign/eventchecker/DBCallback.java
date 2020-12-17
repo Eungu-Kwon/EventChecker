@@ -1,6 +1,5 @@
 package com.swdesign.eventchecker;
 
 public interface DBCallback {
-    void dbDone();
-    void companyDone();
+    void dbDone(int code);
 }

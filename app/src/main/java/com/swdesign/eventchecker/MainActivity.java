@@ -9,12 +9,14 @@ import androidx.fragment.app.FragmentTransaction;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.swdesign.eventchecker.fragments.MainFragment;
 
 public class MainActivity extends AppCompatActivity {
-
+    final long FINISH_INTERVAL_TIME = 2000;
+    long backPressedTime = 0;
     MainFragment mainFragment;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,5 +55,21 @@ public class MainActivity extends AppCompatActivity {
         FragmentTransaction fragmentTransaction = fm.beginTransaction();
         fragmentTransaction.replace(R.id.main_frame, fragment);
         fragmentTransaction.commit();
+    }
+
+    @Override
+    public void onBackPressed() {
+        long tempTime = System.currentTimeMillis();
+        long intervalTime = tempTime - backPressedTime;
+
+        if (0 <= intervalTime && FINISH_INTERVAL_TIME >= intervalTime) {
+            moveTaskToBack(true);
+            finish();
+        }
+        else {
+            backPressedTime = tempTime;
+            Toast.makeText(getApplicationContext(), "뒤로가기 버튼을 한번 더 누르면 종료됩니다.", Toast.LENGTH_SHORT).show();
+        }
+
     }
 }

@@ -5,6 +5,8 @@ import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 
 public class EventInfo implements Serializable {
+    @SerializedName("_id")
+    private String id;
     @SerializedName("company")
     private String company;
     @SerializedName("date")
@@ -15,6 +17,14 @@ public class EventInfo implements Serializable {
     private String title;
     @SerializedName("content")
     private String content;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getCompany() {
         return company;
