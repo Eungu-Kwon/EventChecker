@@ -37,49 +37,6 @@ public class ImageCompute {
         return inSampleSize;
     }
 
-    // 이미지의 회전값 반환
-    // 출처 : https://snowdeer.github.io/android/2016/02/02/android-image-rotation/
-    public static int getOrientationOfImage(String filepath) {
-        ExifInterface exif = null;
-
-        try {
-            exif = new ExifInterface(filepath);
-        } catch (IOException e) {
-            return -1;
-        }
-
-        int orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, -1);
-
-        if (orientation != -1) {
-            switch (orientation) {
-                case ExifInterface.ORIENTATION_ROTATE_90:
-                    return 90;
-
-                case ExifInterface.ORIENTATION_ROTATE_180:
-                    return 180;
-
-                case ExifInterface.ORIENTATION_ROTATE_270:
-                    return 270;
-            }
-        }
-
-        return 0;
-    }
-
-    // path에서 이미지를 읽고 회전값만큼 회전시킨 후 Bitmap 이미지를 반환
-    public static Bitmap getBmpFromPathWithRotate(String path){
-        if(path == null) return null;
-
-        File f = new File(path);
-        if(!f.exists()) return null;
-
-        Bitmap bmp = BitmapFactory.decodeFile(f.getAbsolutePath());
-        int orientation = getOrientationOfImage(f.getAbsolutePath());
-
-        Bitmap rotatedBmp = getBmpWithRotate(bmp, orientation);
-        return rotatedBmp;
-    }
-
     // path에서 이미지를 읽고 회전값만큼 회전시킨 후 Bitmap 이미지를 size만큼 축소시키고 반환 반환
     public static Bitmap getBmpFromPathWithResize(String path, int size){
         if(path == null) return null;
@@ -130,37 +87,6 @@ public class ImageCompute {
         bmp.recycle();
 
         return croppedBmp;
-    }
-
-    // Bitmap 파일과 회전값을 받아 회전된 Bitmap 객체를 반환
-    public static Bitmap getBmpWithRotate(Bitmap bmp, int orientation){
-        if(orientation > 0) {
-            Matrix matrix = new Matrix();
-            matrix.postRotate(orientation);
-
-            Bitmap resizedBitmap = Bitmap.createBitmap(bmp, 0, 0, bmp.getWidth(), bmp.getHeight(), matrix, true);
-            bmp.recycle();
-            return resizedBitmap;
-        }
-        return bmp;
-    }
-
-    public static ArrayList<String> imageListStringToArray(String str){
-        ArrayList<String> list = new ArrayList<>();
-        String[] str_list = str.split(",");
-        for(String i : str_list){
-            if (i == null || i.equals("")) continue;
-            list.add(i);
-        }
-        return list;
-    }
-
-    public static String imageListArrayToString(ArrayList<String> arr){
-        String str = "";
-        for(String i : arr){
-            str += i + ",";
-        }
-        return str;
     }
 
     // inputstream 을 byte[]로 반환

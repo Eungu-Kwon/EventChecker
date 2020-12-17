@@ -77,7 +77,7 @@ public class EventInfoActivity extends AppCompatActivity implements DBCallback {
         }
         date_view.setText(event.getDate());
         File file = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), event.getImageurl().substring(event.getImageurl().lastIndexOf("/")+1));
-        if(file.exists()){
+        if(file.exists() && file.isFile()){
             banner.setImageBitmap(BitmapFactory.decodeFile(file.getAbsolutePath()));
             banner.setVisibility(View.VISIBLE);
         }
