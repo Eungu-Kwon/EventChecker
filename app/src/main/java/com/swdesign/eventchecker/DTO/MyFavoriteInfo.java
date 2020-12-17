@@ -5,6 +5,10 @@ import com.google.gson.annotations.SerializedName;
 public class MyFavoriteInfo {
     @SerializedName("_id")
     private String id;
+    @SerializedName("id")
+    private String userid;
+    @SerializedName("eventid")
+    private String eventid;
 
     public String getId() {
         return id;
@@ -14,6 +18,14 @@ public class MyFavoriteInfo {
         this.id = id;
     }
 
+    public String getUserid() {
+        return userid;
+    }
+
+    public void setUserid(String userid) {
+        this.userid = userid;
+    }
+
     public String getEventid() {
         return eventid;
     }
@@ -21,7 +33,4 @@ public class MyFavoriteInfo {
     public void setEventid(String eventid) {
         this.eventid = eventid;
     }
-
-    @SerializedName("eventid")
-    private String eventid;
 }

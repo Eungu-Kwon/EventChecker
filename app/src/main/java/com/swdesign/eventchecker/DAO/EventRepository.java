@@ -1,6 +1,7 @@
 package com.swdesign.eventchecker.DAO;
 
 import android.content.Context;
+import android.mtp.MtpConstants;
 import android.os.Environment;
 import android.util.Log;
 
@@ -28,6 +29,7 @@ public class EventRepository {
     public static final int EVENT_DONE = 384;
     public static final int COMPANY_DONE = 246;
     public static final int USER_DONE = 546;
+    public static final int FAVORITE_DONE = 3;
     DBApi api;
     DBCallback dbCallback;
     Context c;
@@ -111,7 +113,7 @@ public class EventRepository {
                 for(MyFavoriteInfo i : event){
                     list.add(i);
                 }
-                if(dbCallback != null) dbCallback.dbDone(COMPANY_DONE);
+                if(dbCallback != null) dbCallback.dbDone(FAVORITE_DONE);
             }
 
             @Override
@@ -121,11 +123,50 @@ public class EventRepository {
         }));
     }
 
-    public void postFavoriteList(String userid, String eventid){
-        HashMap<String, Object> hashMap = new HashMap<>();
-        hashMap.put("id", userid);
-        hashMap.put("eventid", eventid);
-        api.postFavorite(hashMap).enqueue(new Callback<MyFavoriteInfo>() {
+    public void getFavorite(String userid, String eventid, MyFavoriteInfo info){
+        api.getFavorite(userid, eventid).enqueue((new Callback<List<MyFavoriteInfo>>() {
+            @Override
+            public void onResponse(Call<List<MyFavoriteInfo>> call, Response<List<MyFavoriteInfo>> response) {
+                List<MyFavoriteInfo> fav = response.body();
+                if(fav.size() != 0){
+                    info.setEventid(fav.get(0).getEventid());
+                    info.setId(fav.get(0).getId());
+                    info.setUserid(fav.get(0).getUserid());
+                }
+                else{
+                    info.setId("");
+                }
+                if(dbCallback != null) dbCallback.dbDone(FAVORITE_DONE);
+            }
+
+            @Override
+            public void onFailure(Call<List<MyFavoriteInfo>> call, Throwable t) {
+                Log.d("mTag", t.toString());
+            }
+        }));
+    }
+
+    public void postFavoriteList(String userid, String eventid, MyFavoriteInfo info){
+        api.postFavorite(userid, eventid).enqueue(new Callback<MyFavoriteInfo>() {
+            @Override
+            public void onResponse(Call<MyFavoriteInfo> call, Response<MyFavoriteInfo> response) {
+                if(response.isSuccessful()){
+                    info.setEventid(response.body().getEventid());
+                    info.setId(response.body().getId());
+                    info.setUserid(response.body().getUserid());
+                    Log.d("mTag", "post success");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<MyFavoriteInfo> call, Throwable t) {
+                Log.d("mTag", t.toString());
+            }
+        });
+    }
+
+    public void deleteFavorite(String id){
+        api.deleteFavorite(id).enqueue(new Callback<MyFavoriteInfo>() {
             @Override
             public void onResponse(Call<MyFavoriteInfo> call, Response<MyFavoriteInfo> response) {
                 if(response.isSuccessful()){
@@ -135,7 +176,7 @@ public class EventRepository {
 
             @Override
             public void onFailure(Call<MyFavoriteInfo> call, Throwable t) {
-                Log.d("mTag", t.toString());
+
             }
         });
     }

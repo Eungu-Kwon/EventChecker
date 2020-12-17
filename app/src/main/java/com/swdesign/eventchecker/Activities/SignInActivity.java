@@ -48,10 +48,10 @@ public class SignInActivity extends AppCompatActivity implements DBCallback {
                 return;
             }
 
-            SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+            SharedPreferences sharedPref = getSharedPreferences("appData", MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPref.edit();
             editor.putString("ID", edit_id.getText().toString());
-            editor.commit();
+            editor.apply();
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
             finish();
