@@ -1,4 +1,4 @@
-package com.swdesign.eventchecker;
+package com.swdesign.eventchecker.DAO;
 
 import android.content.Context;
 import android.os.Environment;

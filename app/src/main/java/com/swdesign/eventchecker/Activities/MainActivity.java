@@ -1,4 +1,4 @@
-package com.swdesign.eventchecker;
+package com.swdesign.eventchecker.Activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.swdesign.eventchecker.R;
 import com.swdesign.eventchecker.fragments.MainFragment;
 
 public class MainActivity extends AppCompatActivity {

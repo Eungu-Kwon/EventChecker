@@ -1,4 +1,4 @@
-package com.swdesign.eventchecker;
+package com.swdesign.eventchecker.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.swdesign.eventchecker.DTO.EventInfo;
+import com.swdesign.eventchecker.R;
 
 import java.io.File;
 

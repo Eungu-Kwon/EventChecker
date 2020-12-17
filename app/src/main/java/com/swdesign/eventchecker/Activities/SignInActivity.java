@@ -1,4 +1,4 @@
-package com.swdesign.eventchecker;
+package com.swdesign.eventchecker.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -10,7 +10,10 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.swdesign.eventchecker.DAO.DBCallback;
 import com.swdesign.eventchecker.DTO.UserInfo;
+import com.swdesign.eventchecker.DAO.EventRepository;
+import com.swdesign.eventchecker.R;
 
 public class SignInActivity extends AppCompatActivity implements DBCallback {
 

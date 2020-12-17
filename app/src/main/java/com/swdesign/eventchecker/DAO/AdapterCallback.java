@@ -1,4 +1,4 @@
-package com.swdesign.eventchecker;
+package com.swdesign.eventchecker.DAO;
 
 import com.swdesign.eventchecker.DTO.CompanyInfo;
 

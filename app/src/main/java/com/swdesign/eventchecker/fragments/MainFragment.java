@@ -11,13 +11,13 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.swdesign.eventchecker.AdapterCallback;
-import com.swdesign.eventchecker.CompanyListAdapter;
-import com.swdesign.eventchecker.DBCallback;
+import com.swdesign.eventchecker.DAO.AdapterCallback;
+import com.swdesign.eventchecker.ListAdapter.CompanyListAdapter;
+import com.swdesign.eventchecker.DAO.DBCallback;
 import com.swdesign.eventchecker.DTO.CompanyInfo;
 import com.swdesign.eventchecker.DTO.EventInfo;
-import com.swdesign.eventchecker.EventListAdapter;
-import com.swdesign.eventchecker.EventRepository;
+import com.swdesign.eventchecker.ListAdapter.EventListAdapter;
+import com.swdesign.eventchecker.DAO.EventRepository;
 import com.swdesign.eventchecker.R;
 
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package com.swdesign.eventchecker;
+package com.swdesign.eventchecker.ListAdapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -15,7 +15,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.swdesign.eventchecker.Activities.EventInfoActivity;
 import com.swdesign.eventchecker.DTO.EventInfo;
+import com.swdesign.eventchecker.R;
 
 import java.io.File;
 import java.util.ArrayList;

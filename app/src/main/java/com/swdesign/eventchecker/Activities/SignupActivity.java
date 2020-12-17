@@ -1,4 +1,4 @@
-package com.swdesign.eventchecker;
+package com.swdesign.eventchecker.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,13 +6,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.EventLog;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.swdesign.eventchecker.DAO.DBCallback;
 import com.swdesign.eventchecker.DTO.UserInfo;
+import com.swdesign.eventchecker.DAO.EventRepository;
+import com.swdesign.eventchecker.R;
 
 public class SignupActivity extends AppCompatActivity implements DBCallback {
 
