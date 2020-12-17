@@ -46,4 +46,7 @@ public interface DBApi {
 
     @POST("/user")
     Call<UserInfo> postUser(@Query("id") String id, @Query("passwd") String passwd);
+
+    @DELETE("/user/{uid}")
+    Call<UserInfo> deleteUser(@Path("uid") String user_id);
 }

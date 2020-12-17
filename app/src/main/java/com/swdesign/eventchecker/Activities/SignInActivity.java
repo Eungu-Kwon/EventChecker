@@ -2,11 +2,14 @@ package com.swdesign.eventchecker.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,10 +28,22 @@ public class SignInActivity extends AppCompatActivity implements DBCallback {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
+        getSupportActionBar().setTitle("로그인");
 
         repository = new EventRepository("http://155.230.52.58:26287/", this, this);
         edit_id = findViewById(R.id.signin_id);
         edit_pass = findViewById(R.id.signin_pass);
+        edit_pass.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
+                    signIn(null);
+                    hideKeyboard();
+                    return true;
+                }
+                return false;
+            }
+        });
         user = new UserInfo();
     }
 
@@ -43,7 +58,7 @@ public class SignInActivity extends AppCompatActivity implements DBCallback {
                 Toast.makeText(this, "존재하지 않는 사용자입니다.", Toast.LENGTH_SHORT).show();
                 return;
             }
-            if(user.getPasswd().equals(edit_pass.getText().toString())){
+            if(!user.getPasswd().equals(edit_pass.getText().toString())){
                 Toast.makeText(this, "비밀번호가 틀렸습니다.", Toast.LENGTH_SHORT).show();
                 return;
             }
@@ -55,6 +70,13 @@ public class SignInActivity extends AppCompatActivity implements DBCallback {
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
             finish();
+        }
+    }
+
+    private void hideKeyboard(){
+        if(getCurrentFocus() != null) {
+            InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
         }
     }
 }

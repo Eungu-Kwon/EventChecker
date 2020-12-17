@@ -38,6 +38,7 @@ public class EventInfoActivity extends AppCompatActivity implements DBCallback {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_info);
+        getSupportActionBar().setTitle("이벤트 정보");
 
         repository = new EventRepository("http://155.230.52.58:26287/", this, this);
         favoriteInfo = new MyFavoriteInfo();

@@ -192,7 +192,7 @@ public class EventRepository {
             @Override
             public void onResponse(Call<MyFavoriteInfo> call, Response<MyFavoriteInfo> response) {
                 if(response.isSuccessful()){
-                    Log.d("mTag", "post success");
+                    Log.d("mTag", "delete success");
                 }
             }
 
@@ -211,6 +211,7 @@ public class EventRepository {
                     UserInfo temp = response.body().get(0);
                     userInfo.setId(temp.getId());
                     userInfo.setPasswd(temp.getPasswd());
+                    userInfo.setDbid(temp.getDbid());
                 }
                 else {
                     userInfo.setId("");
@@ -226,10 +227,6 @@ public class EventRepository {
     }
 
     public void postUser(String userid, String passwd){
-        HashMap<String, Object> hashMap = new HashMap<>();
-        hashMap.put("id", userid);
-        hashMap.put("passwd", passwd);
-
         api.postUser(userid, passwd).enqueue(new Callback<UserInfo>() {
             @Override
             public void onResponse(Call<UserInfo> call, Response<UserInfo> response) {
@@ -241,6 +238,22 @@ public class EventRepository {
             @Override
             public void onFailure(Call<UserInfo> call, Throwable t) {
                 Log.d("mTag", t.toString());
+            }
+        });
+    }
+
+    public void deleteUser(String id){
+        api.deleteUser(id).enqueue(new Callback<UserInfo>() {
+            @Override
+            public void onResponse(Call<UserInfo> call, Response<UserInfo> response) {
+                if(response.isSuccessful()){
+                    Log.d("mTag", "delete success");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UserInfo> call, Throwable t) {
+
             }
         });
     }

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -28,8 +29,10 @@ public class FavoriteFragment extends Fragment implements DBCallback {
     ArrayList<EventInfo> list;
     EventListAdapter listAdapter;
     RecyclerView recyclerView;
+    TextView null_text;
     EventRepository r;
     String userid;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -38,6 +41,7 @@ public class FavoriteFragment extends Fragment implements DBCallback {
         SharedPreferences sharedPref = v.getContext().getSharedPreferences("appData", Context.MODE_PRIVATE);
         userid = sharedPref.getString("ID", "");
 
+        null_text = v.findViewById(R.id.favorite_non_text);
         init_list();
         return v;
     }
@@ -68,6 +72,11 @@ public class FavoriteFragment extends Fragment implements DBCallback {
     @Override
     public void dbDone(int code) {
         if(code == EventRepository.FAVORITE_DONE){
+            if(favorite_list.size() == 0){
+                null_text.setVisibility(View.VISIBLE);
+                return;
+            }
+            else null_text.setVisibility(View.GONE);
             for(MyFavoriteInfo i : favorite_list){
                 r.getEvent(i.getEventid(), list);
             }

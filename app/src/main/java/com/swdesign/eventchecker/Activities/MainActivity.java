@@ -15,16 +15,21 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.swdesign.eventchecker.R;
 import com.swdesign.eventchecker.fragments.FavoriteFragment;
 import com.swdesign.eventchecker.fragments.MainFragment;
+import com.swdesign.eventchecker.fragments.SettingFragment;
 
 public class MainActivity extends AppCompatActivity {
     final long FINISH_INTERVAL_TIME = 2000;
     long backPressedTime = 0;
     MainFragment mainFragment;
     FavoriteFragment favoriteFragment;
+    SettingFragment settingFragment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+//        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+//                WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_bar);
 
@@ -32,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
         final FragmentTransaction fragmentTransaction = fm.beginTransaction();
         mainFragment = new MainFragment();
         favoriteFragment = new FavoriteFragment();
+        settingFragment = new SettingFragment();
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -44,8 +50,8 @@ public class MainActivity extends AppCompatActivity {
                         replaceFragment(favoriteFragment);
                         break;
                     case R.id.bottom_setting:
-                        fm.popBackStack();
-
+                       replaceFragment(settingFragment);
+                        break;
                 }
                 return true;
             }
